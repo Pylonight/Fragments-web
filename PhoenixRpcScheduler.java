@@ -55,69 +55,69 @@ public class PhoenixRpcScheduler extends RpcScheduler {
     }
 
     @Override
-    public void init(Context context) {
-        delegate.init(context);
-        this.port = context.getListenerAddress().getPort();
-    }
+//     public void init(Context context) {
+//         delegate.init(context);
+//         this.port = context.getListenerAddress().getPort();
+//     }
 
-    @Override
-    public void start() {
-        delegate.start();
-        indexCallExecutor.start(port);
-        metadataCallExecutor.start(port);
-    }
+//     @Override
+//     public void start() {
+//         delegate.start();
+//         indexCallExecutor.start(port);
+//         metadataCallExecutor.start(port);
+//     }
 
-    @Override
-    public void stop() {
-        delegate.stop();
-        indexCallExecutor.stop();
-        metadataCallExecutor.stop();
-    }
+//     @Override
+//     public void stop() {
+//         delegate.stop();
+//         indexCallExecutor.stop();
+//         metadataCallExecutor.stop();
+//     }
 
-    @Override
-    public void dispatch(CallRunner callTask) throws InterruptedException, IOException {
-        RpcServer.Call call = callTask.getCall();
-        int priority = call.header.getPriority();
-        if (indexPriority == priority) {
-            indexCallExecutor.dispatch(callTask);
-        } else if (metadataPriority == priority) {
-            metadataCallExecutor.dispatch(callTask);
-        } else {
-            delegate.dispatch(callTask);
-        }
-    }
+//     @Override
+//     public void dispatch(CallRunner callTask) throws InterruptedException, IOException {
+//         RpcServer.Call call = callTask.getCall();
+//         int priority = call.header.getPriority();
+//         if (indexPriority == priority) {
+//             indexCallExecutor.dispatch(callTask);
+//         } else if (metadataPriority == priority) {
+//             metadataCallExecutor.dispatch(callTask);
+//         } else {
+//             delegate.dispatch(callTask);
+//         }
+//     }
 
-    @Override
-    public int getGeneralQueueLength() {
-        // not the best way to calculate, but don't have a better way to hook
-        // into metrics at the moment
-        return this.delegate.getGeneralQueueLength() + this.indexCallExecutor.getQueueLength() + this.metadataCallExecutor.getQueueLength();
-    }
+//     @Override
+//     public int getGeneralQueueLength() {
+//         // not the best way to calculate, but don't have a better way to hook
+//         // into metrics at the moment
+//         return this.delegate.getGeneralQueueLength() + this.indexCallExecutor.getQueueLength() + this.metadataCallExecutor.getQueueLength();
+//     }
 
-    @Override
-    public int getPriorityQueueLength() {
-        return this.delegate.getPriorityQueueLength();
-    }
+//     @Override
+//     public int getPriorityQueueLength() {
+//         return this.delegate.getPriorityQueueLength();
+//     }
 
-    @Override
-    public int getReplicationQueueLength() {
-        return this.delegate.getReplicationQueueLength();
-    }
+//     @Override
+//     public int getReplicationQueueLength() {
+//         return this.delegate.getReplicationQueueLength();
+//     }
 
-    @Override
-    public int getActiveRpcHandlerCount() {
-        return this.delegate.getActiveRpcHandlerCount() + this.indexCallExecutor.getActiveHandlerCount() + this.metadataCallExecutor.getActiveHandlerCount();
-    }
+//     @Override
+//     public int getActiveRpcHandlerCount() {
+//         return this.delegate.getActiveRpcHandlerCount() + this.indexCallExecutor.getActiveHandlerCount() + this.metadataCallExecutor.getActiveHandlerCount();
+//     }
 
-    @VisibleForTesting
-    public void setIndexExecutorForTesting(RpcExecutor executor) {
-        this.indexCallExecutor = executor;
-    }
+//     @VisibleForTesting
+//     public void setIndexExecutorForTesting(RpcExecutor executor) {
+//         this.indexCallExecutor = executor;
+//     }
     
-    @VisibleForTesting
-    public void setMetadataExecutorForTesting(RpcExecutor executor) {
-        this.metadataCallExecutor = executor;
-    }
+//     @VisibleForTesting
+//     public void setMetadataExecutorForTesting(RpcExecutor executor) {
+//         this.metadataCallExecutor = executor;
+//     }
     
     
-}
+// }
